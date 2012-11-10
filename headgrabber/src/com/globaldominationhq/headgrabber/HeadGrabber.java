@@ -6,7 +6,6 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.inventory.*;
 import org.bukkit.entity.*;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import net.minecraft.server.NBTTagCompound;
 
@@ -32,11 +31,12 @@ public final class HeadGrabber extends JavaPlugin {
 						if (player.hasPermission("headgrabber.self")){//permission check
 							//give the player their head
 							PlayerInventory inventory = player.getInventory();//call the players inventory
-							ItemStack head = new ItemStack (Material.SKULL_ITEM, 1);//set the tag "head" to the Skull item
 							String playername = sender.getName(); //set the name of the player who used the command to the String variable playername
-							head.setTypeId(3);
-							NBTTagCompound tag = ((CraftItemStack)head).getHandle().tag;
-							tag.setString("skull", playername);
+							CraftItemStack head;
+								head = new CraftItemStack(Material.SKULL_ITEM,1,(short)3);//set the ItemStack "head" to the Skull item
+							NBTTagCompound headNBT = new NBTTagCompound();
+							headNBT.setString("SkullOwner", playername);
+							head.getHandle().tag = headNBT;
 							inventory.addItem(head);//adds the head to their inventory
 							player.sendMessage("You reach up and pull on your head...it comes off, and a new one grows in its place!");//message to let the player know it worked
 						}else{
@@ -49,10 +49,11 @@ public final class HeadGrabber extends JavaPlugin {
 							//give the player the specified head
 							String playername = args[0];
 							PlayerInventory inventory = player.getInventory();//call the players inventory
-							ItemStack head = new ItemStack (Material.SKULL_ITEM, 1);//set the tag "head" to the Skull item
-							head.setTypeId(3);
-							NBTTagCompound tag = ((CraftItemStack)head).getHandle().tag;
-							tag.setString("skull", playername);
+							CraftItemStack head;
+								head = new CraftItemStack(Material.SKULL_ITEM,1,(short)3);//set the ItemStack "head" to the Skull item
+							NBTTagCompound headNBT = new NBTTagCompound();
+							headNBT.setString("SkullOwner", playername);
+							head.getHandle().tag = headNBT;
 							inventory.addItem(head);//adds the head to their inventory
 							player.sendMessage("You concentrate, and the head appears in your hand!");//message to let the player know it worked
 						}else{
