@@ -1,0 +1,7 @@
+headgrabber:
+  can:
+    own: You reach up and pull on your head...it comes off, and a new one grows in its place!
+    other: You reach over and pull...it works! But a new head grows back on their shoulders.
+  cannot:
+    own: You don't have permission to grab your head!
+    other: You don't have permission to grab someone else's head!

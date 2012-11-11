@@ -1,5 +1,6 @@
 package com.globaldominationhq.headgrabber;
 
+import java.io.IOException;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.command.Command;
@@ -10,11 +11,17 @@ import org.bukkit.inventory.PlayerInventory;
 import net.minecraft.server.NBTTagCompound;
 
 
-
 public final class HeadGrabber extends JavaPlugin {
 	
 	public void onEnable(){
 		getLogger().info("HeadGrabber is enabled, enjoy!");
+		this.saveDefaultConfig();//creates the default config file as outlined in config.yml
+		try {
+			Metrics metrics = new Metrics(this);
+			metrics.start();
+		} catch (IOException e) {
+			//failed to submit the stats :(
+		}
 	}
 	
 	public void onDisable(){
@@ -38,9 +45,9 @@ public final class HeadGrabber extends JavaPlugin {
 							headNBT.setString("SkullOwner", playername);
 							head.getHandle().tag = headNBT;
 							inventory.addItem(head);//adds the head to their inventory
-							player.sendMessage("You reach up and pull on your head...it comes off, and a new one grows in its place!");//message to let the player know it worked
+							player.sendMessage(HeadGrabber.this.getConfig().getString("headgrabber.can.own"));//message to let the player know it worked
 						}else{
-							sender.sendMessage("You don't have permission to grab your head!");//you're not good enough!
+							sender.sendMessage(HeadGrabber.this.getConfig().getString("headgrabber.cannot.own"));//you're not good enough!
 							return false;
 						}
 					}
@@ -55,9 +62,9 @@ public final class HeadGrabber extends JavaPlugin {
 							headNBT.setString("SkullOwner", playername);
 							head.getHandle().tag = headNBT;
 							inventory.addItem(head);//adds the head to their inventory
-							player.sendMessage("You concentrate, and the head appears in your hand!");//message to let the player know it worked
+							player.sendMessage(HeadGrabber.this.getConfig().getString("headgrabber.can.other"));//message to let the player know it worked
 						}else{
-							sender.sendMessage("You don't have permission to grab someone else's head!");//you're not good enough!
+							sender.sendMessage(HeadGrabber.this.getConfig().getString("headgrabber.cannot.other"));//you're not good enough!
 							return false;
 						}	
 					}
