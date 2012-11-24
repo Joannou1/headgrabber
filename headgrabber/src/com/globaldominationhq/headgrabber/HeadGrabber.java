@@ -29,6 +29,7 @@ public final class HeadGrabber extends JavaPlugin {
 	}
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
 	//sender is the person who typed the command, cmd is the command used, label is the alias used, and String[] args is an array of the arguments, starting with args[0]
+		
 		if(cmd.getName().equalsIgnoreCase("headgrabber")){ //watch for the command "headgrabber" 
 			if (!(sender instanceof Player)) {//check to make sure this isn't the console.
 				sender.sendMessage("This command cannot be run from the console.");//if it is, let him down gently
@@ -38,12 +39,9 @@ public final class HeadGrabber extends JavaPlugin {
 						if (player.hasPermission("headgrabber.self")){//permission check
 							//give the player their head
 							PlayerInventory inventory = player.getInventory();//call the players inventory
-							String playername = sender.getName(); //set the name of the player who used the command to the String variable playername
+							String headName = sender.getName(); //set the name of the player who used the command to the String variable playername
 							CraftItemStack head;
-								head = new CraftItemStack(Material.SKULL_ITEM,1,(short)3);//set the ItemStack "head" to the Skull item
-							NBTTagCompound headNBT = new NBTTagCompound();
-							headNBT.setString("SkullOwner", playername);
-							head.getHandle().tag = headNBT;
+								head = headSet(headName);
 							inventory.addItem(head);//adds the head to their inventory
 							player.sendMessage(HeadGrabber.this.getConfig().getString("headgrabber.can.own"));//message to let the player know it worked
 						}else{
@@ -52,15 +50,12 @@ public final class HeadGrabber extends JavaPlugin {
 						}
 					}
 					if (args.length == 1){
-						if (player.hasPermission("headgrabber.all")){//permission check
+						if (player.hasPermission("headgrabber.others")){//permission check
 							//give the player the specified head
-							String playername = args[0];
+							String headName = args[0];
 							PlayerInventory inventory = player.getInventory();//call the players inventory
 							CraftItemStack head;
-								head = new CraftItemStack(Material.SKULL_ITEM,1,(short)3);//set the ItemStack "head" to the Skull item
-							NBTTagCompound headNBT = new NBTTagCompound();
-							headNBT.setString("SkullOwner", playername);
-							head.getHandle().tag = headNBT;
+								head = headSet(headName);
 							inventory.addItem(head);//adds the head to their inventory
 							player.sendMessage(HeadGrabber.this.getConfig().getString("headgrabber.can.other"));//message to let the player know it worked
 						}else{
@@ -74,9 +69,16 @@ public final class HeadGrabber extends JavaPlugin {
 					}
 				}
 			return true;//If the plugin runs successfully, function will return true.
-		}  
-	        
+		}          
 		return false;// If this hasn't happened the a value of false will be returned. 
 	}
 
+	private CraftItemStack headSet(String whosHead){
+		CraftItemStack tempHead;//create a CraftItemStack
+			tempHead = new CraftItemStack(Material.SKULL_ITEM,1,(short)3);//set the CraftItemStack "head" to the Skull item
+		NBTTagCompound tempHeadNBT = new NBTTagCompound();//create an NBT tag
+		tempHeadNBT.setString("SkullOwner", whosHead);//Set the NBT tag "tempHeadNBT"'s "SkullOwner" string to whosHead
+		tempHead.getHandle().tag = tempHeadNBT;//Apply the tempHeadNBT to the tempHead CraftItemStack
+		return tempHead;
+	}
 }
