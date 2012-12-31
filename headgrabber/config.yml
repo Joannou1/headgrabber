@@ -5,3 +5,5 @@ headgrabber:
   cannot:
     own: You don't have permission to grab your head!
     other: You don't have permission to grab someone else's head!
+  drops:
+    death: true
