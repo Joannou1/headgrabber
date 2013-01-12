@@ -10,12 +10,7 @@ public final class HeadGrabber extends JavaPlugin{
 	HeadSet HeadSetObject = new HeadSet();
 	public void onEnable(){
 		this.saveDefaultConfig();//creates the default config file as outlined in config.yml
-		if (HeadGrabber.this.getConfig().getBoolean("headgrabber.drops.death") == true){//check the config to see if ondeath headdropping occurs
-			getServer().getPluginManager().registerEvents(new HeadDeath(), this);	//if so, enable the listener
-			getLogger().info("HeadGrabber drops heads on player death.");
-		}else{
-			getLogger().info("HeadGrabber doesn't drop heads on player death.");
-		}
+		getServer().getPluginManager().registerEvents(new HeadDeath(), this);	//if so, enable the listener
 		try {
 			Metrics metrics = new Metrics(this);
 			metrics.start();
@@ -57,10 +52,10 @@ public final class HeadGrabber extends JavaPlugin{
 							ItemStack head;
 							head = HeadSetObject.headSet(headName);
 							inventory.addItem(head);//adds the head to their inventory
-							player.sendMessage(HeadGrabber.this.getConfig().getString("headgrabber.can.other"));//message to let the player know it worked
+							player.sendMessage(HeadGrabber.this.getConfig().getString("headgrabber.can.other").replaceAll("(&([a-f0-9]))", "\u00A7$2"));//message to let the player know it worked
 							return true;
 						}else{
-							sender.sendMessage(HeadGrabber.this.getConfig().getString("headgrabber.cannot.other"));//you're not good enough!
+							sender.sendMessage(HeadGrabber.this.getConfig().getString("headgrabber.cannot.other").replaceAll("(&([a-f0-9]))", "\u00A7$2"));//you're not good enough!
 							return false;
 						}	
 					}
