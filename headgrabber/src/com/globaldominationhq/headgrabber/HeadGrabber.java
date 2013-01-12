@@ -37,10 +37,10 @@ public final class HeadGrabber extends JavaPlugin{
 							ItemStack head;
 							head = HeadSetObject.headSet(headName);
 							inventory.addItem(head);//adds the head to their inventory
-							player.sendMessage(HeadGrabber.this.getConfig().getString("headgrabber.can.own"));//message to let the player know it worked
+							player.sendMessage(HeadGrabber.this.getConfig().getString("headgrabber.can.own").replaceAll("(&([a-f0-9]))", "\u00A7$2"));//message to let the player know it worked
 							return true;
 						}else{
-							sender.sendMessage(HeadGrabber.this.getConfig().getString("headgrabber.cannot.own"));//you're not good enough!
+							sender.sendMessage(HeadGrabber.this.getConfig().getString("headgrabber.cannot.own").replaceAll("(&([a-f0-9]))", "\u00A7$2"));//you're not good enough!
 							return false;
 						}
 					}
