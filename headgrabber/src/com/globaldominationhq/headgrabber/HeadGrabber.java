@@ -1,5 +1,7 @@
 package com.globaldominationhq.headgrabber;
 import java.io.IOException;
+
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -37,10 +39,12 @@ public final class HeadGrabber extends JavaPlugin{
 							ItemStack head;
 							head = HeadSetObject.headSet(headName);
 							inventory.addItem(head);//adds the head to their inventory
-							player.sendMessage(HeadGrabber.this.getConfig().getString("headgrabber.can.own").replaceAll("(&([a-f0-9]))", "\u00A7$2"));//message to let the player know it worked
+							String filtered = ChatColor.translateAlternateColorCodes('&', HeadGrabber.this.getConfig().getString("headgrabber.can.own"));
+							player.sendMessage(filtered);//Let the player know they're holding they're head
 							return true;
 						}else{
-							sender.sendMessage(HeadGrabber.this.getConfig().getString("headgrabber.cannot.own").replaceAll("(&([a-f0-9]))", "\u00A7$2"));//you're not good enough!
+							String filtered = ChatColor.translateAlternateColorCodes('&', HeadGrabber.this.getConfig().getString("headgrabber.cannot.own"));
+							player.sendMessage(filtered);//tell they player they don't have self-grabbing permission
 							return false;
 						}
 					}
@@ -52,10 +56,12 @@ public final class HeadGrabber extends JavaPlugin{
 							ItemStack head;
 							head = HeadSetObject.headSet(headName);
 							inventory.addItem(head);//adds the head to their inventory
-							player.sendMessage(HeadGrabber.this.getConfig().getString("headgrabber.can.other").replaceAll("(&([a-f0-9]))", "\u00A7$2"));//message to let the player know it worked
+							String filtered = ChatColor.translateAlternateColorCodes('&', HeadGrabber.this.getConfig().getString("headgrabber.can.other"));
+							player.sendMessage(filtered);//message to let the player know they have someone else's head
 							return true;
 						}else{
-							sender.sendMessage(HeadGrabber.this.getConfig().getString("headgrabber.cannot.other").replaceAll("(&([a-f0-9]))", "\u00A7$2"));//you're not good enough!
+							String filtered = ChatColor.translateAlternateColorCodes('&', HeadGrabber.this.getConfig().getString("headgrabber.cannnot.other"));
+							player.sendMessage(filtered);//message to let the player know they're not good enough
 							return false;
 						}	
 					}
@@ -64,7 +70,7 @@ public final class HeadGrabber extends JavaPlugin{
 						return false;
 					}
 				}
-			return true;//If the plugin runs successfully, function will return true.
+			return true;//If the plugin grants a head, function will return true.
 		}          
 		return false;// If this hasn't happened the a value of false will be returned. 
 	}
