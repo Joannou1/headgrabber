@@ -1,6 +1,5 @@
 package com.globaldominationhq.headgrabber;
 import java.io.IOException;
-
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -12,7 +11,7 @@ public final class HeadGrabber extends JavaPlugin{
 	HeadSet HeadSetObject = new HeadSet();
 	public void onEnable(){
 		this.saveDefaultConfig();//creates the default config file as outlined in config.yml
-		getServer().getPluginManager().registerEvents(new HeadDeath(), this);	//if so, enable the listener
+		getServer().getPluginManager().registerEvents(new HeadDeath(this), this);	//if so, enable the listener
 		try {
 			Metrics metrics = new Metrics(this);
 			metrics.start();

@@ -1,6 +1,6 @@
 name: HeadGrabber
 main: com.globaldominationhq.headgrabber.HeadGrabber
-version: 1.5
+version: 1.5.1
 commands:
     headgrabber:
         description: Grab your head and turn it into an item! (Don't worry, it grows back.)
